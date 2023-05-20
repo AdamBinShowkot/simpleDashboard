@@ -3,18 +3,29 @@ import {
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
-    MenuUnfoldOutlined 
+    MenuUnfoldOutlined,
+    UndoOutlined
   } from '@ant-design/icons';
-  import { Button, Layout, Menu, theme } from 'antd';
+  import { 
+    Button, 
+    Layout, 
+    Menu,
+    Row,
+    Col,
+    Card,
+    theme 
+  } from 'antd';
+  import { useNavigate } from 'react-router-dom';
   import { useState } from 'react';
   import SiderMain from './Sider';
   import ContentMain from './Content';
-  import 'react-quill/dist/quill.snow.css';
+  import HeaderMain from './Header';
   const { Header, Sider, Content } = Layout;
 
 
   const MainLayout = ({}) => {
     const [collapsed, setCollapsed] = useState(false);
+    const history=useNavigate();
     const {
       token: { colorBgContainer },
     } = theme.useToken();
@@ -26,24 +37,16 @@ import {
         >
           <SiderMain collapsed={collapsed} />
           <Layout>
-            <Header
-              style={{
-                padding: 0,
-                background: colorBgContainer,
-              }}
-            >
-              <Button
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={() => setCollapsed(!collapsed)}
-                style={{
-                  fontSize: '16px',
-                  width: 64,
-                  height: 64,
-                }}
-              />
-            </Header>
-            <ContentMain colorBgContainer={colorBgContainer}/>
+            <HeaderMain 
+            collapsed={collapsed} 
+            setCollapsed={setCollapsed}
+            colorBgContainer={colorBgContainer}
+            />
+
+            <ContentMain 
+            collapsed={collapsed}
+            colorBgContainer={colorBgContainer}
+            />
           </Layout>
         </Layout>
       </>

@@ -1,10 +1,10 @@
 import React from 'react';
 import NewsEditor from './Editor';
 
-const AddNewNews=()=>{
+const AddNewNews=({isUpdate})=>{
     return(
         <>
-            <NewsEditor/>
+            <NewsEditor isUpdate={isUpdate}/>
         </>
     )
 }

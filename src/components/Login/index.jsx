@@ -20,8 +20,19 @@ import './index.css'
 const Login=()=>{
     const history=useNavigate();
     const handleLogin=(state)=>{
-        if(state.userId==="1234" && state.password==="1234"){
+        if(state.userId==="Reporter" && state.password==="1234"){
             localStorage.setItem("token",state.userId);
+            localStorage.setItem("role","reporter");
+            Success("Login Success.",{},{})
+            history('/');
+        }else if(state.userId==="Approver" && state.password==="1234"){
+            localStorage.setItem("token",state.userId);
+            localStorage.setItem("role","approver");
+            Success("Login Success.",{},{})
+            history('/');
+        }else if(state.userId==="Printer" && state.password==="1234"){
+            localStorage.setItem("token",state.userId);
+            localStorage.setItem("role","printer");
             Success("Login Success.",{},{})
             history('/');
         }else{

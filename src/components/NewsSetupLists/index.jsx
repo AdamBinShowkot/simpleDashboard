@@ -11,48 +11,50 @@ import {
     Input,
     Button
 } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import {
   DeleteOutlined,
   EditOutlined,
   FundViewOutlined
 }from '@ant-design/icons'
+import DataTable from '../ReusableComponent/DataTable';
 
 
-const ReportMain=()=>{
-  const data = [
-    {
-      key: '1',
-      name: 'News Title One...',
-      title: 'News Title One...',
-      age: 32,
-      status:"Print",
-      author:"Md Homayun kabir",
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      title:"News Title Two...",
-      author:"Rahajul Amin Shuvo",
-      status:"Pending",
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      title:"News Title Three...",
-      status:"Print",
-      author:"Md Toufiqur Rahman",
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-];
-  const columns = [
+const NewsSetupLists=({isUpdate})=>{
+    const history=useNavigate();
+    const data = [
+        {
+        key: '1',
+        name: 'News Title One...',
+        title: 'News Title One...',
+        age: 32,
+        author:"Md Homayun kabir",
+        status:"Print",
+        address: 'New York No. 1 Lake Park',
+        tags: ['nice', 'developer'],
+        },
+        {
+        key: '2',
+        name: 'Jim Green',
+        title:"News Title Two...",
+        author:"Rahajul Amin Shuvo",
+        status:"Pending",
+        age: 42,
+        address: 'London No. 1 Lake Park',
+        tags: ['loser'],
+        },
+        {
+        key: '3',
+        name: 'Joe Black',
+        title:"News Title Three...",
+        author:"Md Toufiqur Rahman",
+        status:"Print",
+        age: 32,
+        address: 'Sydney No. 1 Lake Park',
+        tags: ['cool', 'teacher'],
+        },
+    ];
+    const columns = [
       {
         title: 'Serial',
         key: 'sl',
@@ -114,36 +116,50 @@ const ReportMain=()=>{
       {
         title: 'Action',
         key: 'action',
-        align:'center',
         render: (_, record) => (
-          // <Space size="middle">
-          //   <a>Invite {record.name}</a>
-          //   <a>Delete</a>
-          // </Space>
-          <Row style={{textAlign:'center'}}>
-            {/* <Col span={8}>
-              <Tag color="#29c458">
-                <EditOutlined/>
-              </Tag>
-            </Col>
-            <Col span={8}>
-              <Popconfirm title={`Sure Delete "${record.title}" ?`}>
-                <Tag color="#e94e10">
-                  <DeleteOutlined/>
-                </Tag>
-              </Popconfirm>
-            </Col> */}
-            <Col span={24}>
-            <Link to={`/reportLists/${record.age}`}>
-              <Tag color="#0084ff">
-                <FundViewOutlined>
-                  
-                </FundViewOutlined>
-              </Tag>
-            </Link>
-              
-            </Col>
-          </Row>
+            record.status==="Pending"?(
+                <Row style={{textAlign:'center'}}>
+                  <Col span={8}>
+                    <Tag 
+                    color="#29c458"
+                    onClick={()=>{
+                      history('/newsSetup',{state:{isUpdate:true}})
+                    }}
+                    >
+                      <EditOutlined/>
+                    </Tag>
+                  </Col>
+                  <Col span={8}>
+                    <Popconfirm title={`Sure Delete "${record.title}" ?`}>
+                      <Tag color="#e94e10"
+                      >
+                        <DeleteOutlined/>
+                      </Tag>
+                    </Popconfirm>
+                  </Col>
+                  <Col span={8}>
+                    <Link to={`/newsSetupLists/${record.age}`}>
+                      <Tag color="#0084ff">
+                        <FundViewOutlined>
+                          
+                        </FundViewOutlined>
+                      </Tag>
+                    </Link>
+                  </Col>
+                </Row>
+              ):(
+                <Row style={{textAlign:'center'}}>
+                <Col span={24}>
+                  <Link to={`/newsSetupLists/${record.age}`}>
+                    <Tag color="#0084ff">
+                      <FundViewOutlined>
+                        
+                      </FundViewOutlined>
+                    </Tag>
+                  </Link>
+                </Col>
+              </Row>
+            )
         ),
         width:'18%'
       },
@@ -203,14 +219,17 @@ const ReportMain=()=>{
             </Col>
         </Row>
         <Row>
-            <Col span={24}>
-                <Table 
-                columns={columns} 
-                dataSource={data} />
-            </Col>
+          <Col span={24}>
+            <DataTable
+            tableProps={{
+              data:data,
+              columns:columns
+            }}
+            />
+          </Col>
         </Row>
       </Card>
     </>
   )
 }
-export default ReportMain;
+export default NewsSetupLists;

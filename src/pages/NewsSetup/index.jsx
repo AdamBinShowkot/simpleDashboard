@@ -1,17 +1,21 @@
 import React from 'react';
-import AddNewNews from '../../components/AddNewNews/index'
+import {
+    Row,
+    Col,
+    Card
+} from 'antd';
 import { useLocation } from 'react-router-dom';
+import AddNewNewsSetup from '../../components/SetupNews';
 
 
-const AddNewNewsPage=(props)=>{
+const AddNewNewsSetupPage=()=>{
     const location = useLocation();
     //console.log("My Props",location)
     const isUpdate=location.state?location.state.isUpdate:false
-
     return(
         <>
-            <AddNewNews isUpdate={isUpdate}/>
+            <AddNewNewsSetup isUpdate={isUpdate}/>
         </>
     )
 }
-export default AddNewNewsPage;
+export default AddNewNewsSetupPage;

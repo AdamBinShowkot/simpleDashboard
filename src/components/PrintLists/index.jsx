@@ -19,7 +19,7 @@ import {
 }from '@ant-design/icons'
 
 
-const ReportMain=()=>{
+const PrintLists=()=>{
   const data = [
     {
       key: '1',
@@ -36,7 +36,7 @@ const ReportMain=()=>{
       name: 'Jim Green',
       title:"News Title Two...",
       author:"Rahajul Amin Shuvo",
-      status:"Pending",
+      status:"Print",
       age: 42,
       address: 'London No. 1 Lake Park',
       tags: ['loser'],
@@ -134,7 +134,7 @@ const ReportMain=()=>{
               </Popconfirm>
             </Col> */}
             <Col span={24}>
-            <Link to={`/reportLists/${record.age}`}>
+            <Link to={`/printLists/${record.age}`}>
               <Tag color="#0084ff">
                 <FundViewOutlined>
                   
@@ -151,7 +151,7 @@ const ReportMain=()=>{
   return(
     <>
       <Card>
-        <Row>
+        {/* <Row>
             <Col span={24}>
                 <Form>
                     <Row>
@@ -201,7 +201,7 @@ const ReportMain=()=>{
                     </Row>
                 </Form>
             </Col>
-        </Row>
+        </Row> */}
         <Row>
             <Col span={24}>
                 <Table 
@@ -213,4 +213,4 @@ const ReportMain=()=>{
     </>
   )
 }
-export default ReportMain;
+export default PrintLists;

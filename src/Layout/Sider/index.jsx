@@ -16,12 +16,15 @@ import {
     theme 
 } from 'antd';
 import { 
-    useState 
+    useState,
+    useEffect 
 } from 'react';
 import { 
-    Link 
+    Link,
+    useLocation
 } from 'react-router-dom';
-
+import menuConfig from '../../config/menuConfig'
+import './index.css'
 const {  
     Sider 
 } = Layout;
@@ -29,20 +32,30 @@ const SubMenu = Menu.SubMenu;
 
 
 const SiderMain=({collapsed})=>{
+    const location=useLocation();
+    let {pathname}=location;
+    const roles=localStorage.getItem('role')
+    const filterMenu=menuConfig.filter((mnu)=>mnu.roles.includes(roles))
     return(
         <>
             <Sider 
             trigger={null} 
             collapsible 
             collapsed={collapsed}
+            className={`${collapsed?'collapsed-sidebar':'expand-sidebar'}`}
             style={{
-                backgroundColor:'#fff'
+                backgroundColor:'#fff',
+                paddingTop:'10px'
             }}
             >
                 <div className="logo" />
                 <Menu
+                style={{
+                    height:'100vh'
+                }}
                 theme="light"
                 mode="inline"
+                selectedKeys={[pathname?pathname.substr(1):'']}
                 defaultSelectedKeys={['1']}
                     // items={[
                     // {
@@ -63,9 +76,7 @@ const SiderMain=({collapsed})=>{
                     // },
                     // ]}
                 >
-                    <Menu.Item 
-                    //onClick={this.handleAddtags.bind(this,item)}
-                    //</Menu>key={item.path}
+                    {/* <Menu.Item 
                     key="1"
                     icon={<FileAddOutlined />}
                     >
@@ -76,8 +87,6 @@ const SiderMain=({collapsed})=>{
                         </Link>
                     </Menu.Item>
                     <Menu.Item 
-                    //onClick={this.handleAddtags.bind(this,item)}
-                    //</Menu>key={item.path}
                     key="2"
                     icon={<IdcardOutlined />}
                     >
@@ -89,8 +98,6 @@ const SiderMain=({collapsed})=>{
                     </Menu.Item>
 
                     <Menu.Item 
-                    //onClick={this.handleAddtags.bind(this,item)}
-                    //</Menu>key={item.path}
                     key="3"
                     icon={<ContainerOutlined />}
                     >
@@ -101,8 +108,6 @@ const SiderMain=({collapsed})=>{
                         </Link>
                     </Menu.Item>
                     <Menu.Item 
-                    //onClick={this.handleAddtags.bind(this,item)}
-                    //</Menu>key={item.path}
                     key="4"
                     icon={<PrinterOutlined />}
                     >
@@ -111,7 +116,22 @@ const SiderMain=({collapsed})=>{
                                 Report
                             </strong>
                         </Link>
-                    </Menu.Item>
+                    </Menu.Item> */}
+                    {
+                        filterMenu.length?filterMenu.map((menun,index)=>{
+                            return  <Menu.Item 
+                            key={menun.path}
+                            icon={menun.icon}
+                            >
+                                <Link to={menun.path}>
+                                    <strong>
+                                        {menun.title}
+                                    </strong>
+                                </Link>
+                            </Menu.Item>
+                        }):""
+                    }
+
                 </Menu>
             </Sider>
         </>

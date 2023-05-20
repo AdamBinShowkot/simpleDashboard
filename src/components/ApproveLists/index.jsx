@@ -9,15 +9,15 @@ import {
     Popconfirm
 } from 'antd';
 import { Link,useNavigate} from 'react-router-dom';
+import DataTable from '../ReusableComponent/DataTable';
 import {
   DeleteOutlined,
   EditOutlined,
   FundViewOutlined
 }from '@ant-design/icons'
-import DataTable from '../ReusableComponent/DataTable';
 
 
-const ListsMain=()=>{
+const ApproveLists=()=>{
   const history=useNavigate();
   const roles=localStorage.getItem("role")
   const data = [
@@ -36,7 +36,7 @@ const ListsMain=()=>{
       title:"News Title Two...",
       age: 42,
       address: 'London No. 1 Lake Park',
-      status:"Pending",
+      status:"Approve",
       tags: ['loser'],
     },
     {
@@ -45,7 +45,7 @@ const ListsMain=()=>{
       title:"News Title Three...",
       age: 32,
       address: 'Sydney No. 1 Lake Park',
-      status:"Rejected",
+      status:"Approve",
       tags: ['cool', 'teacher'],
     },
   ];
@@ -88,7 +88,6 @@ const ListsMain=()=>{
     let approverColumns={
       title: 'Action',
       key: 'action',
-      align:'center',
       render: (_, record) => (
         // <Space size="middle">
         //   <a>Invite {record.name}</a>
@@ -127,7 +126,7 @@ const ListsMain=()=>{
         ):(
           <Row style={{textAlign:'center'}}>
           <Col span={24}>
-            <Link to={`/newsLists/${record.age}`}>
+            <Link to={`/approveLists/${record.age}`}>
               <Tag color="#0084ff">
                 <FundViewOutlined>
                   
@@ -153,7 +152,7 @@ const ListsMain=()=>{
         // </Space>
         <Row style={{textAlign:'center'}}>
           <Col span={24}>
-          <Link to={`/newsLists/${record.age}`}>
+          <Link to={`/approveLists/${record.age}`}>
             <Tag color="#0084ff">
               <FundViewOutlined>
                 
@@ -172,19 +171,17 @@ const ListsMain=()=>{
     <>
       <Card>
         <Row>
-            <Col span={24}>
-              <DataTable
-              tableProps={
-                {
-                  data:data,
-                  columns:columns
-                }
-              }
-              />
-            </Col>
+          <Col span={24}>
+            <DataTable
+            tableProps={{
+              data:data,
+              columns:columns
+            }}
+            />
+          </Col>
         </Row>
       </Card>
     </>
   )
 }
-export default ListsMain;
+export default ApproveLists;
