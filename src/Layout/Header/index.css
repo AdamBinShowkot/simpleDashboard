@@ -34,3 +34,32 @@
     position:fixed;
     /* min-width: calc(100% - 200px); */
 }
+
+
+
+/* For Settings Drawer Style */
+.settings-drawer .ant-drawer-header{
+    padding: 6px;
+}
+
+/* Settings Title */
+.settings-drawer .setting-title{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Antd Drawer Body Main */
+.settings-drawer .ant-drawer-body{
+    padding: 15px;
+}
+
+/* Inner Title CSS */
+.settings-drawer .ant-drawer-body .inner-title{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/*  For Antd Form Item Css Override */
+.settings-drawer .ant-drawer-body .ant-form-item{
+    margin-bottom: 10px;
+}
