@@ -1,4 +1,8 @@
 import {
+    useState,
+    useEffect
+} from 'react'
+import {
     MenuFoldOutlined,
     UploadOutlined,
     UserOutlined,
@@ -16,10 +20,6 @@ import {
     theme 
 } from 'antd';
 import { 
-    useState,
-    useEffect 
-} from 'react';
-import { 
     Link,
     useLocation
 } from 'react-router-dom';
@@ -36,6 +36,50 @@ const SiderMain=({collapsed})=>{
     let {pathname}=location;
     const roles=localStorage.getItem('role')
     const filterMenu=menuConfig.filter((mnu)=>mnu.roles.includes(roles))
+    const [menuLists,setMenulists]=useState([]);
+
+    useEffect(()=>{
+        if(filterMenu.length){
+            let menus=getMenuNodeReduce(filterMenu);
+            setMenulists(menus)
+        }
+    },[])
+
+    // Menu lists reduce
+    const getMenuNodeReduce=(menuListss)=>{
+        return menuListss.reduce((pre,item)=>{
+            if(!item.child.length){
+                pre=[...pre,(
+                    <Menu.Item 
+                    key={item.path}
+                    icon={item.icon}
+                    >
+                        <Link to={item.path}>
+                            <strong>
+                                {item.title}
+                            </strong>
+                        </Link>
+                    </Menu.Item>
+                )
+                ]
+            }else{
+                pre=[...pre,(
+                    <SubMenu
+                    key={item.path}
+                    title={
+                    <span>
+                        {item.icon ?item.icon: null}
+                        <span>{item.title}</span>
+                    </span>
+                    }
+                    >
+                        {getMenuNodeReduce(item.child)}
+                    </SubMenu>
+                )]
+            }
+            return pre;
+        },[])
+    }
     return(
         <>
             <Sider 
@@ -57,79 +101,9 @@ const SiderMain=({collapsed})=>{
                 mode="inline"
                 selectedKeys={[pathname?pathname.substr(1):'']}
                 defaultSelectedKeys={['1']}
-                    // items={[
-                    // {
-                    //     key: '1',
-                    //     icon: <UserOutlined />,
-                    //     label: 'nav 1',
-                    // },
-                    // {
-                    //     key: '2',
-                    //     icon: <VideoCameraOutlined />,
-                    //     label: 'nav 2',
-                    // },
-                    // {
-                    //     key: '3',
-                    //     icon: <UploadOutlined />,
-                    //     label: 'nav 3',
-                    //     to:"jjj"
-                    // },
-                    // ]}
                 >
-                    {/* <Menu.Item 
-                    key="1"
-                    icon={<FileAddOutlined />}
-                    >
-                        <Link to="/addNewPost">
-                            <strong>
-                                Add New
-                            </strong>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item 
-                    key="2"
-                    icon={<IdcardOutlined />}
-                    >
-                        <Link to="/lists">
-                            <strong>
-                                Lists
-                            </strong>
-                        </Link>
-                    </Menu.Item>
-
-                    <Menu.Item 
-                    key="3"
-                    icon={<ContainerOutlined />}
-                    >
-                        <Link to="/content">
-                            <strong>
-                                Setup
-                            </strong>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item 
-                    key="4"
-                    icon={<PrinterOutlined />}
-                    >
-                        <Link to="/report">
-                            <strong>
-                                Report
-                            </strong>
-                        </Link>
-                    </Menu.Item> */}
                     {
-                        filterMenu.length?filterMenu.map((menun,index)=>{
-                            return  <Menu.Item 
-                            key={menun.path}
-                            icon={menun.icon}
-                            >
-                                <Link to={menun.path}>
-                                    <strong>
-                                        {menun.title}
-                                    </strong>
-                                </Link>
-                            </Menu.Item>
-                        }):""
+                        menuLists
                     }
 
                 </Menu>
